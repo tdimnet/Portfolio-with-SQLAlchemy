@@ -1,26 +1,50 @@
-from flask import render_template
+import datetime
+from flask import render_template, redirect, url_for, request
 
-from models import app, db
+from models import app, db, Project
 
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    projects = Project.query.all()
+
+    return render_template("index.html", projects=projects)
 
 
-@app.route("/projects/new")
+@app.route("/projects/new", methods=["GET", "POST"])
 def add_project():
-    return render_template("project-form.html")
+    if request.form:        
+        try:
+            project_date = request.form["date"]
+            project_datetime = datetime.datetime.strptime(project_date, "%Y-%m-%d")
+
+            new_project = Project(
+                title=request.form["title"],
+                date=project_datetime,
+                description=request.form["desc"],
+                skills=request.form["skills"],
+                github_repo=request.form["github"]
+            )
+
+            db.session.add(new_project)
+            db.session.commit()
+
+            return redirect(url_for("index"))
+
+        except Exception:
+            print("Something went wrong")
+
+    return render_template("add-project.html")
 
 
 @app.route("/projects/<id>")
 def project(id):
-    return render_template("detail.html")
+    return render_template("project.html")
 
 
 @app.route("/projects/<id>/edit")
 def edit_project(id):
-    return render_template("project-form.html")
+    return render_template("edit-project.html")
 
 
 @app.route("/projects/<id>/delete")
