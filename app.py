@@ -39,7 +39,12 @@ def add_project():
 
 @app.route("/projects/<id>")
 def project(id):
-    return render_template("project.html")
+    project = Project.query.get_or_404(id)
+
+    formated_date = project.date.strftime("%b %Y")
+    project_skills = project.skills.split(",")
+    
+    return render_template("project.html", project=project, project_date=formated_date, skills=project_skills)
 
 
 @app.route("/projects/<id>/edit")
@@ -49,7 +54,11 @@ def edit_project(id):
 
 @app.route("/projects/<id>/delete")
 def delete_project(id):
-    pass
+    project = Project.query.get_or_404(id)
+    db.session.delete(project)
+    db.session.commit()
+
+    return redirect(url_for("index"))
 
 
 @app.route("/about")

@@ -39,7 +39,7 @@
             <h3>
                 <a href="{{ url_for('project', id=project.id) }}">{{ project.title }}</a>
             </h3>
-            <a href="#" class="github-btn">
+            <a href="{{ project.github_repo }}" target="_blank" class="github-btn">
                 <i class="fab fa-github"></i>
                 View on GitHub
             </a>
@@ -47,8 +47,7 @@
                 {{ project.description }}
             </p>
             <p>
-                Skills: Pastry wafer chocolate cake caramels. 
-                Gummi bears pudding sugar plum macaroon. 
+                Skills: {{ project.skills }}
             </p>
         </div>
         {% endfor %}
