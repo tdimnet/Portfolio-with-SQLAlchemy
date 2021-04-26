@@ -30,7 +30,7 @@ def delete_project(id):
 
 @app.route("/about")
 def about():
-    return render_template("about")
+    return render_template("about.html")
 
 
 @app.errorhandler(404)
