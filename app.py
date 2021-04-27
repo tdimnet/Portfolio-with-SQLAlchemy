@@ -16,7 +16,8 @@ def add_project():
     if request.form:
         try:
             project_date = request.form["date"]
-            project_datetime = datetime.datetime.strptime(project_date, "%Y-%m-%d")
+            project_datetime = datetime.datetime.strptime(
+                project_date, "%Y-%m-%d")
 
             new_project = Project(
                 title=request.form["title"],
@@ -43,8 +44,11 @@ def project(id):
 
     formated_date = project.date.strftime("%b %Y")
     project_skills = project.skills.split(",")
-    
-    return render_template("project.html", project=project, project_date=formated_date, skills=project_skills)
+    return render_template(
+        "project.html",
+        project=project,
+        project_date=formated_date,
+        skills=project_skills)
 
 
 @app.route("/projects/<id>/edit", methods=["GET", "POST"])
@@ -55,13 +59,14 @@ def edit_project(id):
     if request.form:
         try:
             project_date = request.form["date"]
-            project_datetime = datetime.datetime.strptime(project_date, "%Y-%m-%d")
+            project_datetime = datetime.datetime.strptime(
+                project_date, "%Y-%m-%d")
 
-            project.title=request.form["title"]
-            project.date=project_datetime
-            project.description=request.form["desc"]
-            project.skills=request.form["skills"]
-            project.github_repo=request.form["github"]
+            project.title = request.form["title"]
+            project.date = project_datetime
+            project.description = request.form["desc"]
+            project.skills = request.form["skills"]
+            project.github_repo = request.form["github"]
 
             db.session.commit()
 
@@ -70,7 +75,10 @@ def edit_project(id):
         except Exception:
             print("Something went wrong")
 
-    return render_template("edit-project.html", project=project, formatted_date=formatted_date)
+    return render_template(
+        "edit-project.html",
+        project=project,
+        formatted_date=formatted_date)
 
 
 @app.route("/projects/<id>/delete")
