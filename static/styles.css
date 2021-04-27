@@ -551,6 +551,35 @@ EXCEEDS - About Page
     padding-right: 10px;
 }
 
+/********************
+EXCEEDS - About Page
+********************/
+
+#not-found {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--primary-text);
+}
+
+.not-found-img {
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.go-home-btn {
+    background-color: var(--accent);
+    border-radius: 10px;
+    color: var(--white);
+    padding: 13px 35px;
+    text-decoration: none;
+    border: none;
+}
+
+.go-home-btn i {
+    margin-right: 5px;
+    color: var(--white);
+}
+
 /*******
 Media Queries
 *******/
@@ -592,7 +621,8 @@ Media Queries
     #about,
     #projects,
     #contact,
-    #about-page {
+    #about-page,
+    #not-found {
         padding: 5% 15%;
     }
 

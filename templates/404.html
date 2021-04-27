@@ -1,7 +1,14 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <section>
-        <h2>Not found</h2>
-    </section>
+<section id="not-found">
+    <img src="https://media4.giphy.com/media/m12EDnP8xGLy8/giphy.gif?cid=ecf05e472vloitp1a89w3ebdptsipzcnfhm0kp044fcy79gl&rid=giphy.gif&ct=g" alt="Surprised Dog Gif" class="not-found-img">
+    <h2>Hmm...it seems this page can't be fetched.</h2>
+    <p>{{ error }}</p>
+    <a class="go-home-link" href="{{ url_for('index') }}">
+        <button class="go-home-btn">
+            <i class="fas fa-home"></i>Go Home
+        </button>
+    </a>
+</section>
 {% endblock %}
