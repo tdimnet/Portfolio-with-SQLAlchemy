@@ -13,7 +13,7 @@ def index():
 
 @app.route("/projects/new", methods=["GET", "POST"])
 def add_project():
-    if request.form:        
+    if request.form:
         try:
             project_date = request.form["date"]
             project_datetime = datetime.datetime.strptime(project_date, "%Y-%m-%d")
@@ -47,9 +47,30 @@ def project(id):
     return render_template("project.html", project=project, project_date=formated_date, skills=project_skills)
 
 
-@app.route("/projects/<id>/edit")
+@app.route("/projects/<id>/edit", methods=["GET", "POST"])
 def edit_project(id):
-    return render_template("edit-project.html")
+    project = Project.query.get_or_404(id)
+    formatted_date = project.date.strftime("%Y-%m-%d")
+
+    if request.form:
+        try:
+            project_date = request.form["date"]
+            project_datetime = datetime.datetime.strptime(project_date, "%Y-%m-%d")
+
+            project.title=request.form["title"]
+            project.date=project_datetime
+            project.description=request.form["desc"]
+            project.skills=request.form["skills"]
+            project.github_repo=request.form["github"]
+
+            db.session.commit()
+
+            return redirect(url_for("index"))
+
+        except Exception:
+            print("Something went wrong")
+
+    return render_template("edit-project.html", project=project, formatted_date=formatted_date)
 
 
 @app.route("/projects/<id>/delete")
